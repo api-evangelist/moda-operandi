@@ -1,0 +1,23 @@
+generated: '2026-08-25'
+method: probed
+source: https://search.modaoperandi.com/graphql
+limit_count: 0
+note: >-
+  Moda Operandi publishes no rate limits, because it publishes no API documentation. No
+  RateLimit-*, X-RateLimit-*, Retry-After or equivalent header was observed on any response from
+  any host during this pass. An honest zero: this records that the runtime signal an agent would
+  need is absent, not that the API is unlimited. Consumers get no advance warning and no
+  machine-readable back-off signal; the practical limit is whatever the CDN and origin enforce
+  silently. No load testing was performed — probing a company's production storefront to find
+  where it throttles is out of scope for this pipeline.
+limits: []
+observed_headers:
+  host_search.modaoperandi.com: []
+  host_api.modaoperandi.com:
+  - x-request-id
+  - x-runtime
+  - strict-transport-security
+  - x-frame-options
+  - x-content-type-options
+  note: 'None of these is a rate-limit signal; they are listed to show what the origin does emit.'
+exhaustion_status: unknown

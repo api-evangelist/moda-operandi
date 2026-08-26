@@ -1,0 +1,241 @@
+generated: '2026-08-25'
+method: derived
+status: candidate
+source: graphql/moda-operandi-search-schema.graphql
+note: 'Moda Operandi ships NO MCP server. Searched: the company website, the ModaOperandi GitHub organization
+  (21 public repos), npm under @moda and @modelcontextprotocol, and the storefront runtime configuration
+  — nothing. The tool list below is a CANDIDATE derived one-to-one from the non-deprecated root fields
+  of the introspected GraphQL schema, so every tool has a real backing field whose arguments are its true
+  input contract. It is a design starting point for whoever builds this server; it is not something Moda
+  Operandi publishes, and no endpoint is asserted. The 12 deprecated root query fields are deliberately
+  excluded (see lifecycle/). NO `MCPServer` pointer is emitted in apis.yml for this file: the Kin Score
+  weights MCPServer as a live agent surface worth 12 points, and Moda Operandi does not have one. A
+  candidate tool list is a design document, not a server, and pointing at it would assert an agent
+  surface the company has never shipped.'
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: none
+  verified: derived
+  note: 'mode: none because nobody ships a server. auth is recorded as none because the underlying GraphQL
+    endpoint answers anonymously — a server built from this list would need no credential.'
+server:
+  name: moda-operandi
+  transport: null
+  url: null
+tool_count: 25
+tools:
+- name: moda_autocomplete
+  description: GraphQL Query.autocomplete — returns AutocompleteResult
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.autocomplete
+  arguments:
+  - ab_tests
+  - client_country_code
+  - limit
+  - q
+  returns: AutocompleteResult
+- name: moda_bought_together
+  description: GraphQL Query.bought_together — returns Variant
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.bought_together
+  arguments:
+  - client_country_code
+  - max_recommendations
+  - threshold
+  - variant_id
+  returns: Variant
+- name: moda_designer
+  description: GraphQL Query.designer — returns Designer
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.designer
+  arguments:
+  - id
+  - ab_tests
+  - client_country_code
+  - slug
+  returns: Designer
+- name: moda_designers
+  description: GraphQL Query.designers — returns Designer
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.designers
+  arguments:
+  - ab_tests
+  - all
+  - client_country_code
+  - gender
+  - ids
+  - slugs
+  - vertical
+  returns: Designer
+- name: moda_designers_az
+  description: GraphQL Query.designers_az — returns CollectionResult
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.designers_az
+  arguments:
+  - ab_tests
+  - client_country_code
+  - input
+  returns: CollectionResult
+- name: moda_editorial_slides
+  description: GraphQL Query.editorial_slides — returns Slide
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.editorial_slides
+  arguments:
+  - ids
+  returns: Slide
+- name: moda_gift_categories
+  description: GraphQL Query.gift_categories — returns GiftCategory
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.gift_categories
+  arguments:
+  - category
+  - client_country_code
+  - country_code
+  - get_all_subcategories
+  - sale
+  returns: GiftCategory
+- name: moda_look
+  description: GraphQL Query.look — returns Look
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.look
+  arguments:
+  - id
+  - ab_tests
+  - client_country_code
+  returns: Look
+- name: moda_looking_similar
+  description: GraphQL Query.looking_similar — returns Variant
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.looking_similar
+  arguments:
+  - client_country_code
+  - max_recommendations
+  - threshold
+  - variant_id
+  returns: Variant
+- name: moda_looks
+  description: GraphQL Query.looks — returns Look
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.looks
+  arguments:
+  - ab_tests
+  - client_country_code
+  - ids
+  returns: Look
+- name: moda_navigator_verticals
+  description: GraphQL Query.navigator_verticals — returns NavigatorVertical
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.navigator_verticals
+  arguments:
+  - platform
+  returns: NavigatorVertical
+- name: moda_new_trunkshow_page
+  description: GraphQL Query.new_trunkshow_page — returns NewTrunkshowPage
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.new_trunkshow_page
+  arguments:
+  - slug
+  returns: NewTrunkshowPage
+- name: moda_product_listing
+  description: GraphQL Query.product_listing — returns CollectionResult
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.product_listing
+  arguments:
+  - ab_tests
+  - client_country_code
+  - input
+  - section
+  - section_enum
+  - slug
+  returns: CollectionResult
+- name: moda_related_products
+  description: GraphQL Query.related_products — returns Variant
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.related_products
+  arguments:
+  - client_country_code
+  - max_recommendations
+  - threshold
+  - variant_id
+  returns: Variant
+- name: moda_trending_facets_value
+  description: GraphQL Query.trending_facets_value — returns TrendingFacet
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.trending_facets_value
+  arguments:
+  - facet_name
+  - max_recommendations
+  - threshold
+  returns: TrendingFacet
+- name: moda_trending_items
+  description: GraphQL Query.trending_items — returns Variant
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.trending_items
+  arguments:
+  - client_country_code
+  - facet_name
+  - facet_value
+  - max_recommendations
+  - threshold
+  returns: Variant
+- name: moda_trunkshow
+  description: GraphQL Query.trunkshow — returns Trunkshow
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.trunkshow
+  arguments:
+  - id
+  - ab_tests
+  - client_country_code
+  - slug
+  returns: Trunkshow
+- name: moda_trunkshows
+  description: GraphQL Query.trunkshows — returns TrunkshowCollectionResult
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.trunkshows
+  arguments:
+  - ab_tests
+  - client_country_code
+  - input
+  - slug
+  returns: TrunkshowCollectionResult
+- name: moda_trunkshows_by_date
+  description: GraphQL Query.trunkshows_by_date — returns Trunkshow
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.trunkshows_by_date
+  arguments:
+  - ab_tests
+  - client_country_code
+  - end_dates
+  - limit
+  - start_dates
+  returns: Trunkshow
+- name: moda_trunkshows_by_id
+  description: GraphQL Query.trunkshows_by_id — returns Trunkshow
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.trunkshows_by_id
+  arguments:
+  - ab_tests
+  - client_country_code
+  - ids
+  - slugs
+  returns: Trunkshow
+- name: moda_usage_stats
+  description: GraphQL Query.usage_stats — returns UsageStat
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.usage_stats
+  arguments:
+  - token
+  returns: UsageStat
+- name: moda_user_token
+  description: GraphQL Query.user_token — returns String
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.user_token
+  arguments: []
+  returns: String
+- name: moda_variant
+  description: GraphQL Query.variant — returns Variant
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.variant
+  arguments:
+  - id
+  - ab_tests
+  - client_country_code
+  - href
+  - product_id
+  returns: Variant
+- name: moda_variants
+  description: GraphQL Query.variants — returns Variant
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.variants
+  arguments:
+  - ab_tests
+  - client_country_code
+  - hrefs
+  - ids
+  - product_ids
+  - query
+  returns: Variant
+- name: moda_version
+  description: GraphQL Query.version — returns Int
+  source_field: graphql/moda-operandi-search-schema.graphql#Query.version
+  arguments: []
+  returns: Int

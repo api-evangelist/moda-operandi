@@ -1,0 +1,37 @@
+generated: '2026-08-25'
+method: searched
+source: https://github.com/ModaOperandi/om
+note: >-
+  Moda Operandi ships no embeddable/hosted components for third parties — there is no checkout
+  element, no embedded dashboard and no drop-in widget. What it does publish is its own internal
+  React design system, open-sourced under MIT and consumable by anyone from npm. It is recorded
+  here as a client-side component library, distinct from the (nonexistent) API SDKs in packages/.
+families:
+- name: om — Moda Operandi design system
+  kind: react-component-library
+  package: '@moda/om'
+  version: 21.14.0
+  published: '2026-08-17'
+  repository: https://github.com/ModaOperandi/om
+  loader: 'npm install @moda/om  (ESM + CJS builds, SCSS source, TypeScript types)'
+  license: MIT
+  embeddable_for_third_parties: false
+- name: tokens — design tokens
+  kind: design-tokens
+  package: '@moda/tokens'
+  version: 6.6.135
+  published: '2026-08-24'
+  repository: https://github.com/ModaOperandi/tokens
+  loader: 'npm install @moda/tokens  (JS constants + SCSS)'
+  license: MIT
+- name: icons — iconography as React components
+  kind: react-icon-set
+  repository: https://github.com/ModaOperandi/icons
+  package: '@moda/icons'
+  version: 6.2.48
+  published: '2026-08-17'
+  loader: 'npm install @moda/icons'
+  license: null
+  note: >-
+    Actively released alongside om and tokens. The npm registry record carries no license field;
+    null means checked-and-absent, not unchecked.

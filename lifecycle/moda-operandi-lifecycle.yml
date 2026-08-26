@@ -1,0 +1,207 @@
+generated: '2026-08-25'
+method: derived
+source: graphql/moda-operandi-search-schema.graphql
+note: Moda Operandi publishes no versioning policy, no deprecation policy, no SLA, no changelog and no
+  status page. Everything below is either read off the introspected schema or a recorded absence confirmed
+  by probe. The schema itself is the only lifecycle signal the company emits.
+versioning:
+  scheme: none
+  current: n/a
+  docs: null
+  detail: 'No version segment in the endpoint path, no version header, no date-versioning. A `version:
+    Int!` query field returned 2 on 2026-08-25; it is a server build value with no published meaning.'
+deprecation:
+  policy_url: null
+  sunset_header: false
+  mechanism: GraphQL @deprecated directive only
+  detail: '47 schema fields carry @deprecated with a human-readable reason. None carries a date, a removal
+    window, or a link to a policy. Twelve of them are ROOT QUERY FIELDS, so just under a third of the 37-field
+    public query surface is formally deprecated: ten collection queries all redirect to product_listing,
+    and the two CMS page queries (displayPage, trunkshowPage) say "we will have a new query soon". That is a substantial, undated breaking change
+    hanging over any consumer.'
+  deprecated_root_queries: 12
+  deprecated_fields_total: 47
+sla:
+  url: null
+  uptime_target: null
+  detail: No API SLA is published. The site terms at https://www.modaoperandi.com/terms cover the consumer
+    storefront, not an API.
+status_page: null
+status_page_probe:
+- url: https://status.modaoperandi.com/
+  status: 0
+  result: NXDOMAIN
+- url: https://modaoperandi.statuspage.io/
+  status: 200
+  result: redirects to https://www.atlassian.com/software/statuspage — the Statuspage marketing site,
+    not a Moda Operandi status page
+changelog: null
+changelog_detail: No dated changelog was found on any Moda Operandi host or in the ModaOperandi GitHub
+  organization.
+deprecated_operations:
+- field: Query.designer_collection
+  reason: use product_listing instead
+- field: Query.displayPage
+  reason: this is no longer maintained, we will have a new query soon for CMS pages
+- field: Query.employee
+  reason: use product_listing instead
+- field: Query.favorites
+  reason: use product_listing instead
+- field: Query.guide
+  reason: use product_listing instead
+- field: Query.guide_page
+  reason: use product_listing instead
+- field: Query.new
+  reason: use product_listing instead
+- field: Query.sale
+  reason: use product_listing instead
+- field: Query.search
+  reason: use product_listing instead
+- field: Query.shop
+  reason: use product_listing instead
+- field: Query.shop_by_variants
+  reason: use product_listing instead
+- field: Query.trunkshowPage
+  reason: this is no longer maintained, we will have a new query soon for CMS pages
+deprecated_fields:
+- type: AutocompleteResult
+  field: query_reformulations
+  reason: this isn't supported anymore
+- type: AutocompleteResult
+  field: trending_queries
+  reason: this isn't supported anymore
+- type: AutocompleteResult
+  field: type
+  reason: use __typename instead
+- type: CollectionResult
+  field: price_range
+  reason: this contains the same values as the price_range input
+- type: Designer
+  field: designer_name_slug
+  reason: use name and/or slug instead
+- type: Designer
+  field: href
+  reason: construct the href from the slug instead
+- type: Designer
+  field: type
+  reason: use __typename instead
+- type: DisplayPage
+  field: looks
+  reason: this is no longer supported
+- type: DisplayPage
+  field: products
+  reason: this is no longer supported
+- type: DisplayPage
+  field: trunkshows
+  reason: this is no longer supported
+- type: Look
+  field: look_type
+  reason: use look_type_enum instead
+- type: Look
+  field: runway_image_urls
+  reason: use primary_image_urls instead
+- type: Look
+  field: trunkshow_expired
+  reason: use trunkshow instead to check expiration status
+- type: Look
+  field: type
+  reason: use __typename instead
+- type: LookConnection
+  field: edges
+  reason: use looks instead
+- type: LookConnection
+  field: pageInfo
+  reason: use pagination instead
+- type: NameSlugFacet
+  field: filter_value
+  reason: use slug instead
+- type: Query
+  field: designer_collection
+  reason: use product_listing instead
+- type: Query
+  field: displayPage
+  reason: this is no longer maintained, we will have a new query soon for CMS pages
+- type: Query
+  field: employee
+  reason: use product_listing instead
+- type: Query
+  field: favorites
+  reason: use product_listing instead
+- type: Query
+  field: guide
+  reason: use product_listing instead
+- type: Query
+  field: guide_page
+  reason: use product_listing instead
+- type: Query
+  field: new
+  reason: use product_listing instead
+- type: Query
+  field: sale
+  reason: use product_listing instead
+- type: Query
+  field: search
+  reason: use product_listing instead
+- type: Query
+  field: shop
+  reason: use product_listing instead
+- type: Query
+  field: shop_by_variants
+  reason: use product_listing instead
+- type: Query
+  field: trunkshowPage
+  reason: this is no longer maintained, we will have a new query soon for CMS pages
+- type: Trunkshow
+  field: active_for_groups
+  reason: use active_for instead
+- type: Trunkshow
+  field: type
+  reason: use __typename instead
+- type: TrunkshowCollectionResult
+  field: type
+  reason: use __typename instead
+- type: TrunkshowConnection
+  field: edges
+  reason: use trunkshows instead
+- type: TrunkshowConnection
+  field: pageInfo
+  reason: use pagination instead
+- type: Variant
+  field: availability
+  reason: use availability_enum instead
+- type: Variant
+  field: current_variants_data
+  reason: use master_variants_data instead
+- type: Variant
+  field: fulfilment_type
+  reason: use fulfilment_type_enum instead
+- type: Variant
+  field: gender
+  reason: use vertical instead
+- type: Variant
+  field: is_boutique
+  reason: use availability_enum instead
+- type: Variant
+  field: paginated_looks
+  reason: use looks instead
+- type: Variant
+  field: paginated_trunkshows
+  reason: use trunkshows instead
+- type: Variant
+  field: type
+  reason: use __typename instead
+- type: VariantConnection
+  field: edges
+  reason: use variants instead
+- type: VariantConnection
+  field: pageInfo
+  reason: use pagination instead
+- type: VariantData
+  field: badges
+  reason: this isn't supported anymore
+- type: VariantData
+  field: mapped_color
+  reason: this isn't supported anymore
+- type: VariantData
+  field: return_policy
+  reason: use return_policy_enum instead

@@ -1,0 +1,128 @@
+generated: '2026-08-25'
+method: searched
+source: https://registry.npmjs.org/-/v1/search?text=modaoperandi
+note: >-
+  IMPORTANT — none of these is an API client library. Moda Operandi publishes no SDK for the
+  GraphQL search API or for any other API, and no `SDKs` pointer is emitted in apis.yml for that
+  reason: crediting a design-system package as an API client would assert a client library the
+  company has never shipped. What the company DOES publish to npm is its front-end design system
+  and design tokens, first-party from github.com/ModaOperandi, MIT-licensed, and — for the two
+  live ones — actively released. Registries probed with no result: PyPI, RubyGems, crates.io,
+  Packagist, NuGet, Maven Central, pkg.go.dev.
+sdk_count: 0
+package_count: 9
+packages:
+- language: javascript
+  registry: npm
+  name: '@moda/om'
+  url: https://www.npmjs.com/package/@moda/om
+  install: npm install @moda/om
+  official: true
+  version: 21.14.0
+  published: '2026-08-17'
+  license: MIT
+  repository: https://github.com/ModaOperandi/om
+  kind: design-system
+  note: Moda Operandi's design system expressed as React components. Actively released.
+- language: javascript
+  registry: npm
+  name: '@moda/tokens'
+  url: https://www.npmjs.com/package/@moda/tokens
+  install: npm install @moda/tokens
+  official: true
+  version: 6.6.135
+  published: '2026-08-24'
+  license: MIT
+  repository: https://github.com/ModaOperandi/tokens
+  kind: design-tokens
+  note: Constant values for modaoperandi.com. The most recently published first-party package.
+- language: javascript
+  registry: npm
+  name: '@moda/icons'
+  url: https://www.npmjs.com/package/@moda/icons
+  install: npm install @moda/icons
+  official: true
+  version: 6.2.48
+  published: '2026-08-17'
+  license: null
+  repository: https://github.com/ModaOperandi/icons
+  kind: react-icon-set
+  note: >-
+    Iconography packaged as React components. Actively released. No license field is set in the
+    registry metadata; null here means checked-and-absent, not unchecked.
+- language: javascript
+  registry: npm
+  name: '@moda/imgsrc'
+  url: https://www.npmjs.com/package/@moda/imgsrc
+  install: npm install @moda/imgsrc
+  official: true
+  version: 7.1.1
+  published: '2020-05-21'
+  license: MIT
+  repository: https://github.com/ModaOperandi/moda-imgsrc
+  kind: image-url-helper
+  note: 'Unmaintained: last release 2020-05-21, over five years stale.'
+- language: javascript
+  registry: npm
+  name: moda-themes
+  url: https://www.npmjs.com/package/moda-themes
+  install: npm install moda-themes
+  official: true
+  version: 5.2.0
+  published: '2020-08-20'
+  license: MIT
+  repository: https://github.com/ModaOperandi/moda-themes
+  kind: design-tokens
+  note: 'Superseded by @moda/tokens; last release 2020-08-20.'
+- language: javascript
+  registry: npm
+  name: '@mo-tools-engine/sdk'
+  url: https://www.npmjs.com/package/@mo-tools-engine/sdk
+  install: npm install @mo-tools-engine/sdk
+  official: true
+  version: 3.6.1-2
+  published: '2019-06-03'
+  license: MIT
+  repository: https://github.com/ModaOperandi/mo-tools-engine
+  kind: internal-platform-sdk
+  note: >-
+    "M'O Tools Library — Devkit For Developing Moda Operandi Tools". Despite the name this is a
+    devkit for building plugins into Moda Operandi's internal tooling platform, NOT a client for
+    any Moda Operandi API. Abandoned — last release 2019-06-03, and the mo-tools-engine repository
+    is not present in the public ModaOperandi GitHub organization.
+- language: javascript
+  registry: npm
+  name: '@mo-tools-engine/ui'
+  url: https://www.npmjs.com/package/@mo-tools-engine/ui
+  official: true
+  version: 3.7.3
+  published: '2019-10-31'
+  license: MIT
+  kind: internal-platform-ui
+- language: javascript
+  registry: npm
+  name: '@mo-tools-engine/core'
+  url: https://www.npmjs.com/package/@mo-tools-engine/core
+  official: true
+  version: 3.0.1-beta8
+  published: '2021-10-19'
+  license: MIT
+  kind: internal-platform-core
+- language: javascript
+  registry: npm
+  name: '@mo-tools-engine/common'
+  url: https://www.npmjs.com/package/@mo-tools-engine/common
+  official: true
+  version: 3.0.1-beta.2
+  published: '2021-10-19'
+  license: MIT
+  kind: internal-platform-common
+registries_probed:
+- {registry: npm, result: '9 first-party packages found'}
+- {registry: pypi, result: none}
+- {registry: rubygems, result: none}
+- {registry: crates.io, result: none}
+- {registry: packagist, result: none}
+- {registry: nuget, result: none}
+- {registry: maven-central, result: none}
+- {registry: pkg.go.dev, result: none}

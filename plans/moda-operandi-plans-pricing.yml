@@ -1,0 +1,16 @@
+generated: '2026-08-25'
+method: searched
+source: https://www.modaoperandi.com/
+plan_count: 0
+note: >-
+  Moda Operandi has no API pricing, no plans, no tiers and no "contact sales" API page, because it
+  has no developer program at all. It is a direct-to-consumer luxury retailer; its commercial
+  surface is retail product pricing on modaoperandi.com, not API access. The GraphQL endpoint at
+  search.modaoperandi.com is an unpriced internal surface that happens to be reachable. Recorded
+  as plan_count 0 rather than omitted, so the absence is measured rather than assumed.
+plans: []
+related_commercial_pages:
+- {name: Terms and Conditions, url: 'https://www.modaoperandi.com/terms', status: 200}
+- {name: Moda Network (creator/affiliate program), url: 'https://www.modaoperandi.com/moda-network', status: 200,
+   note: 'A commission-based affiliate program for creators, not an API product; no API is offered to affiliates.'}
+- {name: Affiliate, url: 'https://www.modaoperandi.com/editorial/affiliate', status: 200}

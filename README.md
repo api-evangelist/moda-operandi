@@ -64,5 +64,42 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Moda Operandi is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/moda-operandi_stock/
+Moda Operandi is a New York-based luxury fashion e-commerce marketplace founded in 2010 by Lauren
+Santo Domingo and Aslaug Magnusdottir. It is built around the *trunkshow* model — customers
+pre-order directly from designers' full runway collections weeks before the clothes reach stores —
+alongside an in-season boutique carrying more than 1,000 brands across ready-to-wear, fine
+jewelry, home and beauty.
+
+## What this profile found
+
+**Moda Operandi runs no developer program.** There is no developer portal, no API documentation,
+no API reference, no OpenAPI or Swagger definition, no SDK, no CLI, no webhook or event surface,
+no MCP server, no A2A agent card, no `/.well-known/` document on any host, no status page, no
+changelog, no `security.txt`, no published rate limits and no API pricing.
+
+**But one real machine-readable contract exists.** `https://search.modaoperandi.com/graphql` is the
+first-party GraphQL API that powers search and browse on modaoperandi.com. It is undocumented, but
+it is public, it is named by the storefront's own runtime configuration as
+`SEARCH_API_GRAPHQL_ENDPOINT`, and it answers anonymous introspection. The complete schema —
+37 query fields, 121 types, read-only (no mutation or subscription root) — was introspected on
+2026-08-25 and is saved verbatim in [`graphql/`](graphql/).
+
+Notable findings recorded in the artifacts:
+
+- **Twelve of the 37 root query fields are already `@deprecated`** with no dates and no removal
+  policy; ten of them say "use `product_listing` instead". See [`lifecycle/`](lifecycle/).
+- **Error responses leak a full server-side stacktrace** with absolute filesystem paths under
+  `/opt/app/dist/server/`. See [`errors/`](errors/).
+- **No rate-limit headers of any kind** are emitted, so a client gets no back-off signal. See
+  [`rate-limits/`](rate-limits/).
+- **No API SDK exists.** The nine first-party npm packages under the `@moda` and `@mo-tools-engine`
+  scopes are a React design system, design tokens and an abandoned internal-tools devkit — none of
+  them wraps any Moda Operandi API. See [`packages/`](packages/).
+
+## Links
+
+- Website: https://www.modaoperandi.com/
+- Terms: https://www.modaoperandi.com/terms
+- Privacy: https://www.modaoperandi.com/privacy
+- GitHub: https://github.com/ModaOperandi
+- Help Center: https://help.modaoperandi.com/hc/en-us

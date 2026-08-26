@@ -1,18 +1,68 @@
 aid: moda-operandi
 name: Moda Operandi
-description: 'Moda Operandi is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Moda Operandi is a New York-based luxury fashion e-commerce marketplace founded in 2010 by
+  Lauren Santo Domingo and Aslaug Magnusdottir, built around the "trunkshow" model — customers
+  pre-order directly from designers' full runway collections weeks before the clothes reach
+  stores — alongside a conventional in-season boutique carrying more than 1,000 brands across
+  ready-to-wear, fine jewelry, home and beauty. The company publishes no developer program,
+  no partner API documentation and no OpenAPI definition. It does, however, operate a
+  first-party GraphQL search and merchandising API at search.modaoperandi.com/graphql that
+  powers modaoperandi.com itself, which answers anonymous introspection and exposes a
+  read-only, 37-field catalog graph (trunkshows, designers, looks, product variants,
+  recommendations and faceted search). Moda Operandi also publishes its design system and
+  design tokens as first-party npm packages under the @moda scope.
 url: https://raw.githubusercontent.com/api-evangelist/moda-operandi/refs/heads/main/apis.yml
+image: https://www.modaoperandi.com/dist/public/favicon.png
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-25'
 modified: '2026-08-25'
 tags:
 - Company
-apis: []
+- Retail
+- E-Commerce
+- Fashion
+- Luxury
+- Marketplace
+- Apparel
+- Search
+- GraphQL
+- Product Catalog
+apis:
+- aid: moda-operandi:search-api
+  name: Moda Operandi Search API
+  description: >-
+    The first-party GraphQL API that powers search, browse and merchandising on
+    modaoperandi.com. It is referenced by the storefront's own client bundle as
+    SEARCH_API_GRAPHQL_ENDPOINT, answers anonymous introspection, and is read-only —
+    the schema declares a Query root and no mutation or subscription root. Thirty-seven
+    query fields cover keyword search and autocomplete, faceted product-listing
+    collections, designers, trunkshows, looks, variants, gift categories, editorial
+    slides and Algolia-backed recommendations (bought_together, looking_similar,
+    related_products, trending_items). Moda Operandi does not document this API for
+    third-party use; it is captured here as an observed public surface.
+  humanURL: https://www.modaoperandi.com/
+  baseURL: https://search.modaoperandi.com/graphql
+  tags:
+  - Search
+  - GraphQL
+  - Product Catalog
+  - E-Commerce
+  properties:
+  - type: GraphQL
+    url: graphql/moda-operandi-search-schema.graphql
+  - type: Authentication
+    url: authentication/moda-operandi-authentication.yml
+  - type: DataModel
+    url: data-model/moda-operandi-data-model.yml
+  - type: ErrorCatalog
+    url: errors/moda-operandi-problem-types.yml
+  - type: Conventions
+    url: conventions/moda-operandi-conventions.yml
+  - type: Lifecycle
+    url: lifecycle/moda-operandi-lifecycle.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +70,67 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://forgeglobal.com/moda-operandi_stock/
+  url: https://www.modaoperandi.com/
+- type: TermsOfService
+  url: https://www.modaoperandi.com/terms
+- type: PrivacyPolicy
+  url: https://www.modaoperandi.com/privacy
+- type: SignUp
+  url: https://www.modaoperandi.com/register
+- type: GitHubOrganization
+  url: https://github.com/ModaOperandi
+- type: Support
+  url: https://help.modaoperandi.com/hc/en-us
+- type: Blog
+  url: https://www.modaoperandi.com/editorial/the-edits
+- type: GraphQL
+  url: graphql/moda-operandi-search-schema.graphql
+- type: Authentication
+  url: authentication/moda-operandi-authentication.yml
+- type: Conventions
+  url: conventions/moda-operandi-conventions.yml
+- type: DataModel
+  url: data-model/moda-operandi-data-model.yml
+- type: ErrorCatalog
+  url: errors/moda-operandi-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/moda-operandi-lifecycle.yml
+- type: Conformance
+  url: conformance/moda-operandi-conformance.yml
+- type: Packages
+  url: packages/moda-operandi-packages.yml
+- type: Components
+  url: components/moda-operandi-components.yml
+- type: LLMsTxt
+  url: llms/moda-operandi-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Plans
+  url: plans/moda-operandi-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/moda-operandi-rate-limits.yml
+- type: DomainSecurity
+  url: security/moda-operandi-domain-security.yml
+x-enrichment:
+  date: '2026-08-25'
+  status: enriched
+  artifacts_added: 21
+  pass: local-v1
+x-coverage:
+  state: covered
+  reason: contract-discovered
+  detail: >-
+    Moda Operandi publishes no developer program, but STEP 0b contract discovery found a real,
+    anonymously introspectable first-party GraphQL API at https://search.modaoperandi.com/graphql —
+    named as SEARCH_API_GRAPHQL_ENDPOINT in the storefront's own runtime config — and its full
+    121-type schema was captured verbatim.
+  evidence:
+  - url: https://search.modaoperandi.com/graphql
+    status: 200
+  - url: https://api.modaoperandi.com/openapi.json
+    status: 404
+  - url: https://www.modaoperandi.com/.well-known/agent-card.json
+    status: 301
+  - url: https://www.modaoperandi.com/llms.txt
+    status: 301
+  checked: '2026-08-25'

@@ -1,0 +1,34 @@
+generated: '2026-08-25'
+method: probed
+source: https://search.modaoperandi.com/graphql
+format: graphql-errors
+note: >-
+  Moda Operandi publishes no error reference. This catalog records error envelopes and codes
+  OBSERVED on live, unauthenticated requests to the GraphQL endpoint. It is not exhaustive and is
+  not a provider claim. The API is GraphQL, so it does not use RFC 9457 problem+json and does not
+  signal failure through HTTP status on successful transport — a validation failure is returned
+  as HTTP 400 with a GraphQL `errors[]` array.
+envelope:
+  shape: '{"errors": [{"message": string, "locations": [...], "path": [...], "extensions": {"code": string, "stacktrace": [string]}}]}'
+  code_field: errors[].extensions.code
+  human_field: errors[].message
+  finding: >-
+    The endpoint returns a full server-side `stacktrace` array inside `extensions` on every error,
+    including absolute filesystem paths under /opt/app/dist/server/. This is Apollo Server's
+    development-mode behaviour leaking on a production host; it is an information-disclosure
+    observation, not a feature to build on.
+problems:
+- code: BAD_REQUEST
+  http_status: 400
+  title: Empty or missing GraphQL operation
+  message: 'GraphQL operations must contain a non-empty `query` or a `persistedQuery` extension.'
+  observed_on: 'GET https://search.modaoperandi.com/graphql'
+  remediation: POST a JSON body with a `query` string, or supply a registered persisted-query hash.
+- code: GRAPHQL_VALIDATION_FAILED
+  http_status: 200
+  title: Query does not validate against the schema
+  message: 'Unknown argument "limit" on field "Query.designers".'
+  observed_on: 'POST { designers(all:true limit:2) { name slug } }'
+  remediation: >-
+    Validate against graphql/moda-operandi-search-schema.graphql before sending. Pagination
+    arguments (first/after/page/per_page) live on the connection fields, not on the root query.

@@ -1,0 +1,111 @@
+generated: '2026-08-25'
+method: probed
+source: live probe of every host named in apis.yml and the storefront runtime config
+hit_count: 0
+note: >-
+  No /.well-known/ document is served on any Moda Operandi host. Three distinct negative
+  behaviours were observed and are recorded separately below because they are different facts.
+  (1) www.modaoperandi.com is a single-page React storefront that 301-redirects every
+  /.well-known/<name> request to /well-known/<name-with-dots-stripped> — e.g.
+  /.well-known/security.txt -> /well-known/securitytxt — and that target then returns an HTTP 404
+  carrying the ~197KB SPA shell. A control probe of a deliberately nonsensical path
+  (/well-known/definitely-not-real-xyz123) returned the same 404 and the same ~197KB body, so the
+  host is a catch-all and none of these are documents. (2) api.modaoperandi.com returns a clean
+  HTTP 404 with a zero-byte body for every /.well-known/ path. (3) search.modaoperandi.com is a
+  GraphQL server mounted at the site root that answers EVERY path, including / itself, with an
+  HTTP 400 GraphQL error ("GraphQL operations must contain a non-empty query"); it serves no
+  static files at all. NO WellKnown and NO SecurityTxt pointer is emitted in apis.yml, because
+  nothing was fetched and nothing was saved.
+soft_404_control:
+  url: https://www.modaoperandi.com/well-known/definitely-not-real-xyz123
+  status: 404
+  bytes: 197169
+  note: matches the byte-length of every other 404 on this host to within 100 bytes
+hosts:
+- host: https://www.modaoperandi.com
+  behavior: spa-catch-all
+  documents:
+  - path: /.well-known/security.txt
+    status: 301
+    redirects_to: /well-known/securitytxt
+    final_status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 301
+    redirects_to: /well-known/openid-configuration
+    final_status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 301
+    redirects_to: /well-known/oauth-authorization-server
+    final_status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 301
+    redirects_to: /well-known/api-catalog
+    final_status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 301
+    redirects_to: /well-known/ai-pluginjson
+    final_status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 301
+    redirects_to: /well-known/agent-cardjson
+    final_status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 301
+    redirects_to: /well-known/agentjson
+    final_status: 404
+    file: null
+- host: https://api.modaoperandi.com
+  behavior: clean-404
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+- host: https://search.modaoperandi.com
+  behavior: graphql-catch-all
+  documents:
+  - path: /.well-known/security.txt
+    status: 400
+    file: null
+    note: GraphQL error body, not a document
+  - path: /.well-known/openid-configuration
+    status: 400
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 400
+    file: null
+  - path: /.well-known/api-catalog
+    status: 400
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 400
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 400
+    file: null
+  - path: /.well-known/agent.json
+    status: 400
+    file: null

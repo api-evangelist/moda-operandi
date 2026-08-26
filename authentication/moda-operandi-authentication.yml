@@ -1,0 +1,44 @@
+generated: '2026-08-25'
+method: probed
+source: https://search.modaoperandi.com/graphql
+note: >-
+  Moda Operandi publishes no authentication documentation, because it publishes no developer
+  program. This profile is what was OBSERVED against the live GraphQL endpoint, not what the
+  provider claims. There is no OpenAPI securityScheme to derive from.
+summary:
+  types: []
+  api_key_in: []
+  oauth2_flows: []
+  anonymous_access: true
+schemes: []
+observed:
+- surface: https://search.modaoperandi.com/graphql
+  transport: https
+  requires_credentials: false
+  evidence: >-
+    An unauthenticated POST of the full GraphQL IntrospectionQuery returned HTTP 200 with a
+    complete __schema (121 types). An unauthenticated POST of "{ version }" returned
+    {"data":{"version":2}}. No Authorization header, cookie or API key was sent.
+  in_schema:
+    - field: user_token
+      type: String
+      note: >-
+        A Query field that returns a token string. Its purpose is not documented; it appears to
+        issue an Algolia/analytics session identifier rather than an authorization credential.
+        Not probed for a value.
+    - field: usage_stats
+      args: [token]
+      note: >-
+        Takes a required `token` argument, which implies a privileged surface exists behind some
+        token scheme. No token issuance, scope or format is documented anywhere public.
+- surface: https://api.modaoperandi.com/public
+  transport: https
+  requires_credentials: unknown
+  evidence: >-
+    Named as MODA_API_URL in the storefront runtime config. Every anonymously probed path under
+    this host returned HTTP 404 with a zero-byte body, including /public itself. No auth challenge
+    was ever emitted, so nothing about its auth model could be established.
+gaps:
+- No published authentication documentation.
+- No OAuth 2.0 or OpenID Connect discovery document on any host (see well-known/).
+- The token accepted by `usage_stats` has no documented issuance path.

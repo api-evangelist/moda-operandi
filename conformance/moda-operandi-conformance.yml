@@ -1,0 +1,69 @@
+generated: '2026-08-25'
+method: derived
+source: graphql/moda-operandi-search-schema.graphql
+note: >-
+  Derived from the introspected schema and live probes. Moda Operandi publishes no compliance
+  page, no certifications and no standards claims of any kind, so NO `Compliance` pointer is
+  emitted in apis.yml — an unpublished compliance program must not be credited as a published one.
+standards:
+- id: graphql
+  conforms: true
+  evidence: >-
+    Spec-compliant GraphQL served at https://search.modaoperandi.com/graphql; a standard
+    IntrospectionQuery returns a complete __schema (121 types). Apollo Server is identifiable from
+    the error stacktrace paths.
+- id: graphql-introspection
+  conforms: true
+  evidence: Introspection is enabled and answers anonymously — the schema is machine-readable without credentials.
+- id: relay-connections
+  conforms: partial
+  evidence: >-
+    Connection types expose Relay `edges` + `pageInfo { endCursor, hasNextPage }`, but both are
+    @deprecated in favour of a non-Relay flat list plus a page-number `pagination: PaginationInfo`.
+    The Relay shape is being retired, not adopted.
+- id: apq-persisted-queries
+  conforms: true
+  evidence: >-
+    The BAD_REQUEST error names a `persistedQuery` extension as an accepted alternative to a
+    `query` string (Apollo Automatic Persisted Queries). No persisted-query registry is published.
+- id: openapi
+  conforms: false
+  evidence: No OpenAPI or Swagger document on any host; see the probe log in x-coverage evidence.
+- id: asyncapi
+  conforms: false
+  evidence: No event, streaming or webhook surface is published.
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 security scheme, no /.well-known/oauth-authorization-server on any host.
+- id: oidc
+  conforms: false
+  evidence: No /.well-known/openid-configuration on any host.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: GraphQL `errors[]` envelope with `extensions.code`; no application/problem+json.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: No /.well-known/security.txt served; see well-known/moda-operandi-well-known.yml.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header observed; deprecation is signalled only by the GraphQL @deprecated directive.
+- id: idempotency-key
+  conforms: na
+  evidence: Read-only API — no mutation root, so there is no write to make idempotent.
+domain_standards:
+  market: luxury retail / fashion e-commerce
+  note: >-
+    REWARD-ONLY and honestly empty. Retail's machine-readable domain standards — GS1 GTIN/GDSN,
+    schema.org/Product, GS1 Digital Link, OpenRTB for the ad side, EDI X12 850/856 for wholesale —
+    are all wholesale or web-markup surfaces, and NONE of them appears in this contract. The schema
+    uses purely internal identifiers (integer `id`, `objectid`, `queryid`, `index`, slug) with no
+    GTIN, EAN, UPC, MPN or schema.org mapping anywhere in its 121 types. The storefront HTML
+    likewise emits no application/ld+json block on the home page. No domain-standard conformance
+    is asserted, and none is invented to fill the slot.
+  probed:
+  - standard: GS1 GTIN / EAN / UPC
+    present: false
+    evidence: 'grep of all 121 introspected types: no field named gtin, ean, upc, mpn or barcode'
+  - standard: schema.org Product (JSON-LD)
+    present: false
+    evidence: 'GET https://www.modaoperandi.com/ (200) contains no <script type="application/ld+json"> block'

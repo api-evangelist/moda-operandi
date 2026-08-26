@@ -1,0 +1,1229 @@
+schema {
+  query: Query
+}
+
+enum Availability {
+  AVAILABLE
+  AVAILABLE_NOW
+  PREORDER
+  SOLD_OUT
+  TRUNKSHOW
+}
+
+enum AvailabilityInput {
+  available_now
+  preorder
+  trunkshow
+}
+
+enum CollectionSort {
+  DEFAULT
+  HIGH
+  INVENTORY
+  LOW
+  MARKDOWN
+  RECENCY
+  RECENCY_NEW
+}
+
+enum CtaType {
+  BUTTON
+  LINK
+}
+
+enum EditorialVideoPlacement {
+  LEFT
+  RIGHT
+}
+
+enum FulfilmentType {
+  CONSIGNMENT
+  DIRECT_TO_CONSUMER
+  DROPSHIP
+  EMPLOYEE
+  FULFILLMENT
+  MIRAKL_DROPSHIP
+  MIRAKL_ECONCESSION
+  NONE
+  ON_ORDER
+  SHIPPED
+  VINTAGE
+}
+
+enum Gender {
+  women
+}
+
+enum GenderType {
+  Both
+  Menswear
+  Womenswear
+}
+
+enum LookType {
+  complete_the_collection
+  complete_the_routine
+  how_to_wear_it
+  works_well_with
+}
+
+enum LookTypeV2 {
+  COMPLETE_THE_COLLECTION
+  COMPLETE_THE_ROUTINE
+  HOW_TO_WEAR_IT
+  WORKS_WELL_WITH
+}
+
+enum NavigatorPlatform {
+  DESKTOP
+  MOBILE
+}
+
+enum NavigatorUnitListItemType {
+  Default
+  Section
+}
+
+enum ProductListingSection {
+  DESIGNER
+  EMPLOYEE
+  FAVORITES
+  GIFTS
+  GUIDE
+  NEW
+  SALE
+  SEARCH
+  SHOP
+  SHOP_BY_VARIANTS
+}
+
+enum ReturnPolicy {
+  extended_holidays
+  final_sale
+  full_refund
+  full_refund_markdown
+  full_refund_no_credit
+  site_credit
+  site_credit_markdown
+}
+
+enum ReturnPolicyV2 {
+  EXTENDED_HOLIDAYS
+  FINAL_SALE
+  FULL_REFUND
+  FULL_REFUND_MARKDOWN
+  FULL_REFUND_NO_CREDIT
+  SITE_CREDIT
+  SITE_CREDIT_MARKDOWN
+}
+
+enum TextAlignType {
+  center
+  left
+  right
+}
+
+enum TrunkshowCollectionSort {
+  ACTIVE_END
+  ACTIVE_START
+  DEFAULT
+  NAME
+}
+
+enum Vertical {
+  BEAUTY
+  HOME
+  KIDS
+  MEN
+  WOMEN
+}
+
+input CollectionInput {
+  attribute_types: [String]
+  attributes: [String]
+  availability: [AvailabilityInput]
+  availability_enum: [Availability!]
+  category_path: String
+  collections: [String]
+  country_code: String
+  designers: [String]
+  """
+  Algolia Dynamic Re-Ranking
+  """
+  dynamic_reranking: Boolean
+  filter_colors: [String]
+  gift_category_path: String
+  materials: [String]
+  no_sale: Boolean
+  on_sale: Boolean
+  """
+  Applies raw Algolia optionalFilters directly, bypassing Rules — for instant preview of unpublished changes
+  """
+  optional_filters: [String]
+  price_range: PriceRange
+  primary_attributes: [String]
+  """
+  Same as `attributes`, but has a higher precedence.
+More specifically:
+- `primary_attributes` and `attributes` are joined with AND, while values inside these 2 buckets are joined with OR.
+- The facets for `attributes` are filtered by `primary_attributes` while the opposite is not true.
+  """
+  q: String
+  rounded_markdown_percentages: [String]
+  """
+  Overwrites the rule contexts sent to Algolia
+  """
+  rule_contexts: [String]
+  """
+  Allows previewing of unpublished rules
+  """
+  rules: [Rule]
+  """
+  sale: true - returns only items on sale
+sale: false - returns only items NOT on sale
+sale: null - returns all items (both on sale and not on sale)
+  """
+  sale: Boolean
+  sale_tags: [String]
+  scoring: String
+  sizes: [String]
+  variant_ids: [String]
+  version_id: Int
+}
+
+input Condition {
+  alternatives: Boolean
+  anchoring: String
+  context: String
+  pattern: String
+}
+
+input Consequence {
+  filterPromotes: Boolean
+  params: RuleParams
+  promote: [RulePromote!]!
+}
+
+input FromToTimestamp {
+  from: Int
+  to: Int
+}
+
+"""
+This is deprecated, use CollectionInput instead
+"""
+input KeywordSearchInput {
+  attribute_types: [String]
+  attributes: [String]
+  availability: [AvailabilityInput]
+  availability_enum: [Availability!]
+  category_path: String
+  collections: [String]
+  country_code: String
+  designers: [String]
+  """
+  Algolia Dynamic Re-Ranking
+  """
+  dynamic_reranking: Boolean
+  filter_colors: [String]
+  materials: [String]
+  no_sale: Boolean
+  on_sale: Boolean
+  """
+  Applies raw Algolia optionalFilters directly, bypassing Rules — for instant preview of unpublished changes
+  """
+  optional_filters: [String]
+  price_range: PriceRange
+  primary_attributes: [String]
+  """
+  Same as `attributes`, but has a higher precedence.
+More specifically:
+- `primary_attributes` and `attributes` are joined with AND, while values inside these 2 buckets are joined with OR.
+- The facets for `attributes` are filtered by `primary_attributes` while the opposite is not true.
+  """
+  q: String
+  rounded_markdown_percentages: [String]
+  """
+  Overwrites the rule contexts sent to Algolia
+  """
+  rule_contexts: [String]
+  """
+  Allows previewing of unpublished rules
+  """
+  rules: [Rule]
+  """
+  sale: true - returns only items on sale
+sale: false - returns only items NOT on sale
+sale: null - returns all items (both on sale and not on sale)
+  """
+  sale: Boolean
+  sale_tags: [String]
+  scoring: String
+  sizes: [String]
+  variant_ids: [String]
+  version_id: Int
+}
+
+input PriceRange {
+  max: Float
+  min: Float
+}
+
+input Rule {
+  conditions: [Condition!]!
+  consequence: Consequence
+  enabled: Boolean
+  objectID: String!
+}
+
+input RuleParams {
+  filters: String
+  optionalFilters: [String!]
+}
+
+input RulePromote {
+  objectIDs: [String!]!
+  position: Int!
+}
+
+input TrunkshowCollectionInput {
+  """
+  List of categories to filter by, e.g. ["Clothing", "Bags"]
+  """
+  category: [String]
+  """
+  Designer ids to filter and sort by, e.g. ["3391", "317"]
+  """
+  designer_ids: [String]
+  """
+  Designer slugs to filter by, e.g. ["alexis","louis-vuitton"]
+  """
+  designer_slugs: [String]
+  """
+  List of categories to exclude, e.g. ["Clothing", "Bags"]
+  """
+  excluded_categories: [String]
+  """
+  Vertical to filter by
+  """
+  gender: Gender
+  """
+  Applies raw Algolia optionalFilters directly, bypassing Rules — for instant preview of unpublished changes
+  """
+  optional_filters: [String]
+  """
+  Overwrites the rule contexts sent to Algolia
+  """
+  rule_contexts: [String]
+  """
+  Allows previewing of unpublished rules
+  """
+  rules: [Rule]
+  """
+  Return only single designer trunkshows
+  """
+  single_designer_only: Boolean
+  """
+  Optional version id from Pumo
+  """
+  version_id: Int
+}
+
+type AutocompleteResult {
+  category_pages: [CategoryPage!]!
+  designer_name_slugs: [NameSlug!]!
+  query_reformulations(interval: Int, limit: Int): [QueryReformulation!]! @deprecated(reason: "this isn't supported anymore")
+  trending_queries(interval: Int, limit: Int): [TrendingQuery!]! @deprecated(reason: "this isn't supported anymore")
+  trunkshow_autocomplete_facets: [TrunkshowAutocompleteFacets!]!
+  type: String! @deprecated(reason: "use __typename instead")
+}
+
+type AvailabilityFacet {
+  available_now: Int!
+  preorder: Int!
+  trunkshow: Int!
+}
+
+type CarouselItem {
+  id: Int!
+  position: Int!
+}
+
+type CarouselPumoModule {
+  id: Int!
+  bgColor: String!
+  cells: [CarouselCell!]!
+  editorials: [Editorial!]
+  """
+  top: 0, right: 1, bottom: 2, left: 3
+  """
+  imageEditorialPosition: Int
+  layoutType: Int
+  looks: [CarouselItem!]
+  mainEditorial: Slide
+  modelId: String!
+  moduleHeight: String
+  moduleType: String
+  name: String
+  platform: [String!]!
+  products: [CarouselItem!]
+  trunkshows: [CarouselItem!]
+}
+
+type CategoryPage {
+  attribute: String
+  category: String!
+  gender: String!
+  name: String!
+  subcategory: String!
+}
+
+type CategoryTree {
+  children: [CategoryTree]
+  name: String!
+  slug: String!
+  total_items: Int!
+}
+
+type CollectionResult {
+  applied_filters: [String!]!
+  attributes: [NameSlugFacet!]!
+  availability: AvailabilityFacet!
+  category_tree: CategoryTree!
+  collections: [Facet!]!
+  designers: [NameSlugFacet!]!
+  designers_with_id: [NameSlugIdFacet!]!
+  filter_colors: [Facet!]!
+  materials: [NameSlugFacet!]!
+  page_name: String!
+  price_range: PriceRangeInfo! @deprecated(reason: "this contains the same values as the price_range input")
+  primary_attributes: [NameSlugFacet!]!
+  redirect_url: String
+  rounded_markdown_percentages: [Facet!]!
+  sale_tags: [Facet!]!
+  seasons: [Facet!]!
+  """
+  Same as `attributes`, but has a higher precedence.
+The facets for `attributes` are filtered by `primary_attributes` while the opposite is not true.
+  """
+  sizes: [SizeFacet!]!
+  subcategories: [Facet!]!
+  tags: [Facet!]!
+  total_items: Int!
+  type: String!
+  variants(after: String, all: Boolean, first: Int, page: Int, per_page: Int, sort: String, sort_enum: CollectionSort): VariantConnection!
+}
+
+type CustomizationParameters {
+  character_class: String!
+  display_text: String!
+  max_length: Int!
+  min_length: Int!
+  required: Boolean!
+}
+
+type Designer {
+  id: ID!
+  description: String!
+  designer_name_slug: String! @deprecated(reason: "use name and/or slug instead")
+  href: String @deprecated(reason: "construct the href from the slug instead")
+  index: String!
+  name: String!
+  objectid: String!
+  queryid: String!
+  slug: String!
+  type: String! @deprecated(reason: "use __typename instead")
+}
+
+type DesktopNavigatorItem {
+  id: String!
+  href: String!
+  name: String!
+  style: NavigatorItemStyle!
+  units: [DesktopNavigatorUnit!]!
+}
+
+type DesktopNavigatorVertical {
+  id: String!
+  href: String!
+  index: String!
+  items: [DesktopNavigatorItem!]!
+  style: NavigatorItemStyle!
+  title: String!
+}
+
+type DisplayPage {
+  guideSubPages: [GuideSubPage!]
+  looks: [[Int!]!]! @deprecated(reason: "this is no longer supported")
+  meta_description: String!
+  name: String!
+  page_title: String!
+  products: [[Int!]!]! @deprecated(reason: "this is no longer supported")
+  restricted_to_user_groups: [Int!]!
+  slug: String!
+  targetBuckets: [TargetBucket!]!
+  trunkshows: [[Int!]!]! @deprecated(reason: "this is no longer supported")
+  versionId: Int!
+}
+
+type DividerPumoModule {
+  id: Int!
+  bgColor: String!
+  layoutType: Int
+  modelId: String!
+  moduleType: String
+  name: String
+  platform: [String!]!
+  text: String
+  verticalPadding: String
+}
+
+type Editorial {
+  afterId: Int
+  afterPosition: Int
+  editorialId: String
+  slides: [Slide!]!
+}
+
+type EditorialNavigatorUnit {
+  id: String!
+  anchorText: String
+  headline: String!
+  href: String
+  image_alt: String!
+  image_source: String!
+}
+
+type EditorialVideo {
+  id: String!
+  has_audio: Boolean
+  height: Int
+  mobile_has_audio: Boolean
+  mobile_height: Int
+  mobile_id: String
+  mobile_width: Int
+  placement: EditorialVideoPlacement!
+  width: Int
+}
+
+type EmailPumoModule {
+  id: Int!
+  bgColor: String!
+  emailUnit: EmailUnit!
+  modelId: String!
+  moduleType: String
+  name: String
+  platform: [String!]!
+  slideUnit: Slide!
+}
+
+type EmailUnit {
+  backgroundColor: String
+  backgroundWidth: Int
+  ctaText: String
+  ctaUrl: String
+  desktopImage: Image!
+  eyebrowText: TextObject
+  genderType: GenderType
+  headlineText: TextObject
+  horizontalPadding: Int
+  mobileImage: Image
+  taglineText: TextObject
+  textAlignment: Int
+  textColor: String
+  useDivider: Boolean
+  verticalPadding: Int
+}
+
+type Facet {
+  name: String!
+  total_items: Int!
+}
+
+type FitRecommendation {
+  description: String!
+  name: String!
+}
+
+type GiftCategory {
+  children: [GiftCategory!]!
+  label: String!
+  slug: String!
+}
+
+type GridPumoModule {
+  id: Int!
+  bgColor: String!
+  editorials: [Editorial!]
+  header: String!
+  modelId: String!
+  moduleType: String
+  name: String
+  platform: [String!]!
+  subheader: String!
+}
+
+type GuideSubPage {
+  name: String!
+  slug: String!
+}
+
+type HomePageHeaderPumoModule {
+  id: Int!
+  bgColor: String
+  headerText: String
+  layoutType: Int
+  list: [HomePageHeaderPumoModuleListItem!]!
+  modelId: String!
+  moduleType: String
+  name: String
+  platform: [String!]!
+  slides: [Slide!]!
+}
+
+type HomePageHeaderPumoModuleListItem {
+  anchorText: TextObject
+  ctaUrl: String
+  featureImage: Image
+  headlineText: TextObject
+}
+
+type Image {
+  altText: String
+  fullPath: String
+  image: String!
+  imagePadding: Float!
+}
+
+type Inventory {
+  available: Int!
+  can_sell: Boolean!
+  filtered_by_this_size: Boolean!
+  on_hand: Int!
+  on_order: Int!
+  process_delivery_dates: VariantDelivery!
+  size: String!
+  sku: String!
+}
+
+type LimitedTrunkshowData {
+  id: ID!
+  name: String!
+  season: String!
+  slug: String!
+}
+
+type ListNavigatorUnit {
+  id: String!
+  header: String!
+  list: [NavigatorUnitListItem!]!
+}
+
+type LivestreamPumoModule {
+  id: Int!
+  before_cta_url: String!
+  cta_after_show_text: String!
+  cta_before_show_text: String!
+  headline_body: String!
+  livestream_id: String!
+  modelId: String!
+  moduleType: String
+  name: String
+  platform: [String!]!
+  slides: [Slide!]!
+  start_date: String!
+}
+
+type Look {
+  id: ID!
+  countdown_message: String
+  description: String
+  designer_names: [String!]!
+  index: String!
+  look_type: LookType @deprecated(reason: "use look_type_enum instead")
+  look_type_enum: LookTypeV2
+  name: String!
+  next_look_id: Int!
+  objectid: String!
+  position: Int!
+  previous_look_id: Int!
+  primary_image_urls: LookImageUrls!
+  primary_product_id: Int
+  queryid: String!
+  runway_image_urls: LookImageUrls! @deprecated(reason: "use primary_image_urls instead")
+  title: String
+  trunkshow: Trunkshow
+  trunkshow_expired: String @deprecated(reason: "use trunkshow instead to check expiration status")
+  trunkshow_id: Int
+  trunkshow_name: String!
+  trunkshow_slugs: [String!]!
+  type: String! @deprecated(reason: "use __typename instead")
+  variant_ids: [Int!]!
+  variants(after: String, all: Boolean, first: Int, page: Int, per_page: Int, sort: String): VariantConnection!
+}
+
+type LookConnection {
+  edges: [LookEdge!]! @deprecated(reason: "use looks instead")
+  looks: [Look]!
+  pageInfo: PageInfo! @deprecated(reason: "use pagination instead")
+  pagination: PaginationInfo!
+}
+
+type LookEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+  """
+  The item at the end of the edge
+  """
+  node: Look
+}
+
+type LookImageUrls {
+  main: String!
+  medium_low: String!
+  raw: String!
+  thumb: String!
+}
+
+type MobileNavigatorItem {
+  id: String!
+  href: String!
+  name: String!
+  style: NavigatorItemStyle!
+  units: [ListNavigatorUnit!]!
+}
+
+type MobileNavigatorVertical {
+  id: String!
+  featured: [MobileNavigatorVerticalFeaturedItem!]!
+  href: String!
+  index: String!
+  items: [MobileNavigatorItem!]!
+  title: String!
+}
+
+type MobileNavigatorVerticalFeaturedItem {
+  anchorText: String
+  headline: String
+  href: String
+  imageAlt: String
+  imageSrc: String
+}
+
+type MultiPumoModule {
+  id: Int!
+  bgColor: String!
+  layoutType: Int
+  modelId: String!
+  moduleHeight: String
+  moduleType: String
+  name: String
+  platform: [String!]!
+  units: [Slide!]!
+}
+
+type NameSlug {
+  gender_slug: String
+  name: String!
+  slug: String!
+}
+
+type NameSlugFacet {
+  filter_value: String! @deprecated(reason: "use slug instead")
+  name: String!
+  slug: String!
+  total_items: Int!
+}
+
+type NameSlugId {
+  id: ID!
+  name: String
+  slug: String
+}
+
+type NameSlugIdFacet {
+  id: ID!
+  name: String!
+  slug: String!
+  total_items: Int!
+}
+
+type NavigatorItemStyle {
+  bold: Boolean!
+  color: String
+}
+
+type NavigatorUnitListItem {
+  id: String!
+  href: String!
+  title: String!
+  type: NavigatorUnitListItemType!
+}
+
+type NewTrunkshowPage {
+  looks(optional_filters: [String], rule_contexts: [String], rules: [Rule]): [TrunkshowLook]
+  products(optional_filters: [String], rule_contexts: [String], rules: [Rule]): [TrunkshowProduct]
+  trunkshow: Trunkshow
+}
+
+type PageInfo {
+  """
+  When paginating forwards, the cursor to continue.
+  """
+  endCursor: String
+  """
+  When paginating forwards, are there more items?
+  """
+  hasNextPage: Boolean!
+}
+
+type PaginationInfo {
+  page: Int!
+  per_page: Int!
+  total_entries: Int!
+  total_pages: Int!
+}
+
+type Pill {
+  text: String!
+  url: String!
+}
+
+type PillsPumoModule {
+  id: Int!
+  bgColor: String!
+  modelId: String!
+  moduleType: String
+  name: String
+  pills: [Pill!]!
+  platform: [String!]!
+}
+
+type PriceDetails {
+  currency: String!
+  currency_html_code: String!
+  human: String
+  price: String
+}
+
+type PriceRangeInfo {
+  max: Float
+  min: Float
+  without_vat: Boolean
+}
+
+type Query {
+  autocomplete(ab_tests: [String], client_country_code: String, limit: Int, q: String): AutocompleteResult
+  bought_together(client_country_code: String, max_recommendations: Int, threshold: Float, variant_id: String!): [Variant]!
+  designer(id: String, ab_tests: [String], client_country_code: String, slug: String): Designer
+  designer_collection(ab_tests: [String], client_country_code: String, input: CollectionInput, slug: String): CollectionResult! @deprecated(reason: "use product_listing instead")
+  designers(ab_tests: [String], all: Boolean, client_country_code: String, gender: String, ids: [String], slugs: [String], vertical: Vertical): [Designer]!
+  designers_az(ab_tests: [String], client_country_code: String, input: CollectionInput): CollectionResult!
+  displayPage(ab_tests: [String], client_country_code: String, country_code: String, gender: String, rule_suffix: String, rules: [Rule], show_beauty: Boolean, slug: String, variation: Boolean, version_id: Int): DisplayPage @deprecated(reason: "this is no longer maintained, we will have a new query soon for CMS pages")
+  editorial_slides(ids: [String]): [Slide]!
+  employee(ab_tests: [String], client_country_code: String, input: CollectionInput): CollectionResult! @deprecated(reason: "use product_listing instead")
+  favorites(ab_tests: [String], client_country_code: String, input: CollectionInput): CollectionResult! @deprecated(reason: "use product_listing instead")
+  gift_categories(category: String, client_country_code: String, country_code: String, get_all_subcategories: Boolean, sale: Boolean): [GiftCategory!]!
+  guide(ab_tests: [String], client_country_code: String, input: CollectionInput): CollectionResult! @deprecated(reason: "use product_listing instead")
+  guide_page(ab_tests: [String], client_country_code: String, input: CollectionInput, slug: String!): CollectionResult! @deprecated(reason: "use product_listing instead")
+  look(id: String!, ab_tests: [String], client_country_code: String): Look
+  looking_similar(client_country_code: String, max_recommendations: Int, threshold: Float, variant_id: String!): [Variant]!
+  looks(ab_tests: [String], client_country_code: String, ids: [String]): [Look]!
+  navigator_verticals(platform: NavigatorPlatform!): [NavigatorVertical!]!
+  new(ab_tests: [String], client_country_code: String, input: CollectionInput): CollectionResult! @deprecated(reason: "use product_listing instead")
+  new_trunkshow_page(slug: String): NewTrunkshowPage
+  product_listing(ab_tests: [String], client_country_code: String, input: CollectionInput, section: String, section_enum: ProductListingSection, slug: String): CollectionResult!
+  related_products(client_country_code: String, max_recommendations: Int, threshold: Float, variant_id: String!): [Variant]!
+  sale(ab_tests: [String], client_country_code: String, input: CollectionInput): CollectionResult! @deprecated(reason: "use product_listing instead")
+  search(ab_tests: [String], client_country_code: String, input: KeywordSearchInput): CollectionResult! @deprecated(reason: "use product_listing instead")
+  shop(ab_tests: [String], client_country_code: String, input: CollectionInput): CollectionResult! @deprecated(reason: "use product_listing instead")
+  shop_by_variants(ab_tests: [String], client_country_code: String, input: CollectionInput): CollectionResult! @deprecated(reason: "use product_listing instead")
+  trending_facets_value(facet_name: String!, max_recommendations: Int, threshold: Float): [TrendingFacet]!
+  trending_items(client_country_code: String, facet_name: String, facet_value: String, max_recommendations: Int, threshold: Float): [Variant]!
+  trunkshow(id: String, ab_tests: [String], client_country_code: String, slug: String): Trunkshow
+  trunkshowPage(ab_tests: [String], client_country_code: String, country_code: String, gender: String, rule_suffix: String, rules: [Rule], slug: String, version_id: Int): TrunkshowPage @deprecated(reason: "this is no longer maintained, we will have a new query soon for CMS pages")
+  trunkshows(ab_tests: [String], client_country_code: String, input: TrunkshowCollectionInput, slug: String): TrunkshowCollectionResult
+  trunkshows_by_date(ab_tests: [String], client_country_code: String, end_dates: FromToTimestamp, limit: Int, start_dates: FromToTimestamp): [Trunkshow]!
+  trunkshows_by_id(ab_tests: [String], client_country_code: String, ids: [String], slugs: [String]): [Trunkshow]!
+  usage_stats(token: String!): [UsageStat!]!
+  user_token: String
+  variant(id: String, ab_tests: [String], client_country_code: String, href: String, product_id: String): Variant
+  variants(ab_tests: [String], client_country_code: String, hrefs: [String], ids: [String], product_ids: [String], query: String): [Variant]!
+  version: Int!
+}
+
+type QueryReformulation {
+  days: Int!
+  query: String!
+}
+
+type RecommendationsPumoModule {
+  id: Int!
+  affinityType: String
+  algorithm: String
+  dividerPadding: String
+  dividerText: String
+  dividerType: Int
+  layoutType: Int
+  limit: Int
+  modelId: String!
+  moduleHeight: String
+  moduleType: String
+  name: String
+  platform: [String!]!
+}
+
+type SinglePumoModule {
+  id: Int!
+  bgColor: String!
+  fullBleed: Boolean
+  modelId: String!
+  moduleType: String
+  name: String
+  platform: [String!]!
+  sliderAutoplay: Boolean
+  slides: [Slide!]!
+}
+
+type SizeFacet {
+  category: String
+  filter_value: String
+  size: String
+  total_items: Int
+}
+
+type Slide {
+  id: ID!
+  ctaType: CtaType!
+  ctaUrl: String
+  featureImage: Image
+  mobileImage: Image
+  slideText: SlideText
+}
+
+type SlideText {
+  anchorText: TextObject
+  ctaText: String
+  editorialBgColor: String!
+  editorialEdgeMargin: Int!
+  editorialPosition: String!
+  editorialWidth: Int!
+  eyebrowText: TextObject
+  headlineText: TextObject
+  horizontalPadding: Int!
+  taglineText: TextObject
+  textAlign: TextAlignType!
+  textColor: String!
+  useDivider: Boolean!
+  verticalPadding: Int!
+}
+
+type SmsPumoModule {
+  id: Int!
+  body_text: String!
+  headline_text: String!
+  modelId: String!
+  moduleType: String
+  name: String
+  platform: [String!]!
+  slides: [Slide!]!
+}
+
+type TargetBucket {
+  modules: [PumoModule!]!
+  name: String!
+}
+
+type TextObject {
+  body: String
+  bold: Boolean
+  italic: Boolean
+  size: Int
+}
+
+type TrendingFacet {
+  facet_name: String
+  facet_value: String
+  score: Float
+}
+
+type TrendingQuery {
+  days: Int!
+  destination_path: String!
+  query: String!
+  query_type: String!
+}
+
+type Trunkshow {
+  id: ID!
+  active_end_i: Int!
+  active_for: TrunkshowActiveFor!
+  active_for_groups: [Int!]! @deprecated(reason: "use active_for instead")
+  active_start_i: Int!
+  categories: [String!]!
+  description: String!
+  designer_names: [String!]!
+  designer_slugs: [String!]!
+  ending_image_urls: TrunkshowImageUrls!
+  index: String!
+  limited_designer_data: [NameSlugId!]!
+  look_count: Int!
+  look_ids: [Int!]!
+  looks(after: String, all: Boolean, first: Int, page: Int, per_page: Int, sort: String): LookConnection!
+  name: String!
+  objectid: String!
+  page_type_slugs: [String!]!
+  preview_image_urls: [String!]!
+  primary_image_urls: TrunkshowImageUrls!
+  private_until_i: Int!
+  queryid: String!
+  restricted: Boolean!
+  season: String!
+  season_name: String!
+  secondary_image_urls: TrunkshowImageUrls!
+  slug: String!
+  type: String! @deprecated(reason: "use __typename instead")
+  variant_ids: [Int!]!
+  variants(after: String, all: Boolean, first: Int, page: Int, per_page: Int, sort: String): VariantConnection!
+}
+
+type TrunkshowActiveFor {
+  designer_ids: [Int!]!
+  group_ids: [Int!]!
+}
+
+type TrunkshowAutocompleteFacets {
+  id: ID!
+  active_end_i: Int!
+  gender: String!
+  name: String!
+  private_until: Int!
+  season: String!
+  slug: String!
+}
+
+type TrunkshowCollectionResult {
+  categories: [NameSlugFacet!]!
+  designers: [NameSlugFacet!]!
+  total_items: Int!
+  trunkshows(after: String, all: Boolean, first: Int, page: Int, per_page: Int, sort: String, sort_enum: TrunkshowCollectionSort): TrunkshowConnection!
+  type: String! @deprecated(reason: "use __typename instead")
+}
+
+type TrunkshowConnection {
+  edges: [TrunkshowEdge!]! @deprecated(reason: "use trunkshows instead")
+  pageInfo: PageInfo! @deprecated(reason: "use pagination instead")
+  pagination: PaginationInfo!
+  trunkshows: [Trunkshow]!
+}
+
+type TrunkshowCountdownPumoModule {
+  id: Int!
+  bgColor: String!
+  countdownColor: String
+  modelId: String!
+  moduleType: String
+  name: String
+  platform: [String!]!
+  slide: Slide!
+  trunkshow: Trunkshow
+}
+
+type TrunkshowEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+  """
+  The item at the end of the edge
+  """
+  node: Trunkshow
+}
+
+type TrunkshowImageUrls {
+  main: String!
+  medium_low: String!
+  raw: String!
+  thumb: String!
+}
+
+type TrunkshowPage {
+  displayPage: DisplayPage
+  trunkshow: Trunkshow
+}
+
+type UsageStat {
+  count: Int!
+  key: String!
+}
+
+type Variant {
+  id: ID!
+  active_end_i: Int!
+  active_for_groups: [Int!]!
+  active_start_i: Int!
+  availability: String! @deprecated(reason: "use availability_enum instead")
+  availability_enum: Availability!
+  available: Boolean!
+  average_order_value_bucket: Int!
+  calculated_sell_through: Float!
+  calculated_sell_through_all_time: Float!
+  can_sell: Boolean!
+  category: [String!]!
+  clinical_studies: String
+  collections: [String!]!
+  current_variants_data: VariantData! @deprecated(reason: "use master_variants_data instead")
+  customer_delivery_notes: String
+  customizable: Boolean!
+  customization_parameters: CustomizationParameters
+  description: String!
+  description_text: String!
+  designer_name: String!
+  designer_slug: String!
+  detail_bullets: String
+  disable_size_mapping: Boolean!
+  fit_brand: String!
+  fit_recommendation: FitRecommendation
+  fulfilment_type: Int! @deprecated(reason: "use fulfilment_type_enum instead")
+  fulfilment_type_enum: FulfilmentType!
+  gender: Int! @deprecated(reason: "use vertical instead")
+  how_to_use: String
+  index: String!
+  ingredients: String
+  is_boutique: Boolean! @deprecated(reason: "use availability_enum instead")
+  limited_trunkshow_data: [LimitedTrunkshowData!]!
+  looks(after: String, all: Boolean, first: Int, page: Int, per_page: Int, sort: String): LookConnection!
+  master: Boolean!
+  master_variant_id: Int
+  master_variants_data: VariantData!
+  name: String!
+  new_arrival_on_i: Int!
+  objectid: String!
+  order_limit: Int
+  other_variants_data: [VariantData!]!
+  paginated_looks(after: String, all: Boolean, first: Int, page: Int, per_page: Int, sort: String): LookConnection! @deprecated(reason: "use looks instead")
+  paginated_trunkshows(after: String, all: Boolean, first: Int, page: Int, per_page: Int, sort: String): TrunkshowConnection! @deprecated(reason: "use trunkshows instead")
+  payment_type: String
+  popularity: Float!
+  primary_look_id: Int
+  product_id: Int!
+  queryid: String!
+  recency_bucket: Int!
+  recommendation_looks: [Look!]!
+  restricted: Boolean!
+  sales_volume_bucket: Int!
+  score: Int
+  shipping_restrictions: String!
+  shop_attributes: [String!]!
+  size_equivalents: [[String!]!]!
+  slug: String!
+  subcategory: [String!]!
+  tag: String
+  total_views: Int!
+  total_views_bucket: Int!
+  trunkshow_private_until: Int!
+  trunkshows(after: String, all: Boolean, first: Int, page: Int, per_page: Int, sort: String): TrunkshowConnection!
+  type: String! @deprecated(reason: "use __typename instead")
+  unit_sales_bucket: Int!
+  variant_ids: [Int!]!
+  vertical: Vertical!
+  videos: [VariantVideo!]!
+}
+
+type VariantConnection {
+  edges: [VariantEdge!]! @deprecated(reason: "use variants instead")
+  pageInfo: PageInfo! @deprecated(reason: "use pagination instead")
+  pagination: PaginationInfo!
+  variants: [Variant]!
+}
+
+type VariantData {
+  id: ID!
+  alternate_image_urls: [VariantImageUrls!]!
+  badges: [String!]! @deprecated(reason: "this isn't supported anymore")
+  can_sell: Boolean!
+  collections: [String!]!
+  color: String
+  color_swatch_image_url: String
+  coming_soon: Boolean!
+  custom_color_name: String
+  custom_color_value: String
+  href: String!
+  inventory: [Inventory]!
+  label: String!
+  mapped_color: String @deprecated(reason: "this isn't supported anymore")
+  pay_in_full: Boolean!
+  prices(country_code: String, deposit_rate: Float, without_vat: Boolean): VariantPrice!
+  primary_image_urls: VariantImageUrls!
+  process_delivery_dates: VariantDelivery!
+  return_policy: ReturnPolicy! @deprecated(reason: "use return_policy_enum instead")
+  return_policy_enum: ReturnPolicyV2!
+  slug: String!
+  sold_out: Boolean!
+}
+
+type VariantDelivery {
+  delivery_ends_on: String
+  delivery_starts_on: String
+}
+
+type VariantEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+  """
+  The item at the end of the edge
+  """
+  node: Variant
+}
+
+type VariantImageUrls {
+  key: String
+  large: String!
+  low: String!
+  medium: String!
+  medium_large: String!
+  medium_low: String!
+  raw: String!
+  small: String!
+  thumb: String!
+}
+
+type VariantPrice {
+  currency: String!
+  current_price: PriceDetails!
+  deposit_price: PriceDetails
+  original_price: PriceDetails!
+  vat: PriceDetails!
+}
+
+type VariantVideo {
+  id: String!
+  has_audio: Boolean!
+  height: Int!
+  width: Int!
+}
+
+type VideoPumoModule {
+  id: Int!
+  modelId: String!
+  name: String
+  platform: [String!]!
+  slides: [Slide!]!
+  video: EditorialVideo!
+}
+
+union CarouselCell = Variant | Look | Trunkshow | Slide
+
+union DesktopNavigatorUnit = ListNavigatorUnit | EditorialNavigatorUnit
+
+union NavigatorVertical = DesktopNavigatorVertical | MobileNavigatorVertical
+
+union PumoModule = CarouselPumoModule | DividerPumoModule | EmailPumoModule | GridPumoModule | HomePageHeaderPumoModule | LivestreamPumoModule | MultiPumoModule | PillsPumoModule | RecommendationsPumoModule | SinglePumoModule | SmsPumoModule | TrunkshowCountdownPumoModule | VideoPumoModule
+
+union TrunkshowLook = Look | Slide
+
+union TrunkshowProduct = Variant | Slide

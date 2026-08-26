@@ -1,0 +1,114 @@
+generated: '2026-08-25'
+method: derived
+source: graphql/moda-operandi-search-schema.graphql
+note: >-
+  Derived from the introspected GraphQL schema plus live probes. Moda Operandi publishes no
+  conventions documentation, so nothing here is a provider claim — every entry is either read off
+  the schema or observed on the wire.
+authentication:
+  style: none
+  detail: The endpoint answers introspection and queries anonymously. See authentication/.
+transport:
+  protocol: GraphQL over HTTP POST
+  endpoint: https://search.modaoperandi.com/graphql
+  content_type: application/json
+  get_supported: false
+  detail: >-
+    A GET with no body returns HTTP 400 BAD_REQUEST. Persisted queries are supported — the error
+    message names a `persistedQuery` extension as an alternative to a `query` string — but no
+    persisted-query registry or hash list is published.
+pagination:
+  style: hybrid page-number and cursor
+  params:
+    on: connection fields (CollectionResult.variants, Trunkshow.looks, Look.variants, Variant.looks, ...)
+    arguments: [first, after, page, per_page, all, sort, sort_enum]
+  response_fields:
+    current: 'pagination: PaginationInfo { page, per_page, total_entries, total_pages }'
+    deprecated: 'pageInfo: PageInfo { endCursor, hasNextPage } — marked @deprecated("use pagination instead")'
+  detail: >-
+    Relay-shaped `edges`/`pageInfo` exist on every connection but are BOTH deprecated in favour of
+    a flat list field (`variants`, `looks`, `trunkshows`) plus a page-number `pagination` block.
+    Consumers should use page/per_page, not after/endCursor, despite the cursor arguments still
+    being accepted.
+  sort:
+    enum: CollectionSort
+    values: [DEFAULT, HIGH, INVENTORY, LOW, MARKDOWN, RECENCY, RECENCY_NEW]
+    note: 'a legacy string `sort` argument coexists with the typed `sort_enum`'
+filtering:
+  style: structured input objects
+  inputs: [CollectionInput, KeywordSearchInput, TrunkshowCollectionInput]
+  facets: >-
+    CollectionResult returns the applied filters plus every facet bucket (designers, attributes,
+    sizes, materials, filter_colors, collections, sale_tags, seasons, subcategories, tags,
+    category_tree) with per-bucket counts, so a client can render a filter UI from one round trip.
+  engine_leakage: >-
+    Several input fields expose the backing search engine directly: `dynamic_reranking`
+    ("Algolia Dynamic Re-Ranking"), `optional_filters` ("Applies raw Algolia optionalFilters
+    directly, bypassing Rules"), `rule_contexts`, and a `rules: [Rule]` input for "previewing of
+    unpublished rules". These are merchandising-console affordances reachable anonymously.
+field_expansion:
+  style: native GraphQL selection sets
+  detail: Sparse fieldsets are inherent to GraphQL; there is no separate expand/fields parameter.
+localization:
+  params: [client_country_code, country_code]
+  detail: >-
+    Nearly every root field takes `client_country_code`, and price resolution takes
+    `country_code`, `deposit_rate` and `without_vat`. Pricing and availability are
+    country-dependent.
+experimentation:
+  params: [ab_tests]
+  detail: >-
+    Most root fields accept `ab_tests: [String]`, which selects the experiment variant the
+    response is rendered under. Undocumented; the valid values are not published.
+request_tracing:
+  header: null
+  detail: >-
+    No request-id header was observed on the GraphQL host. The separate REST host
+    api.modaoperandi.com does return `x-request-id` and `x-runtime` on every response.
+versioning:
+  scheme: none-in-transport
+  detail: >-
+    There is no version in the path, no version header and no date-based version. The schema
+    exposes a `version: Int!` query field which returned `2` on 2026-08-25 — an informational
+    server value, not a negotiable API version. Change is communicated only through @deprecated
+    directives in the schema itself.
+error_envelope:
+  ref: errors/moda-operandi-problem-types.yml
+  shape: 'errors[] with extensions.code'
+rate_limit_signaling:
+  headers: []
+  detail: >-
+    No RateLimit-*, X-RateLimit-* or Retry-After header was observed on any response. See
+    rate-limits/moda-operandi-rate-limits.yml.
+idempotency:
+  supported: na
+  reason: >-
+    The API has no write surface — the schema declares a Query root and no mutation or
+    subscription root — so there is nothing to double-fire and no idempotency contract to publish.
+dry_run_mode:
+  supported: na
+  reason: read-only API; there is no state-changing action to rehearse.
+reversibility:
+  applicable: false
+  grade: na
+  reason: >-
+    Read-only API. The introspected schema has no mutationType and no subscriptionType, so there
+    is no write operation, and therefore no cancel/refund/void/reverse/undo/restore path to
+    document and no window to state. Recording `na` rather than a zero is the correct measurement
+    here: Moda Operandi has not failed to publish a reversal contract, it has no action for one to
+    apply to.
+  write_surfaces: []
+  evidence: >-
+    Introspection response data.__schema.mutationType == null and
+    data.__schema.subscriptionType == null (graphql/moda-operandi-search-introspection.json).
+  note: >-
+    Cart, checkout, order and return operations DO exist behind modaoperandi.com — the storefront
+    routes them to https://api.modaoperandi.com/public and the site exposes /request-return to
+    humans — but that host publishes no specification and returned HTTP 404 for every anonymously
+    probed path, so its reversibility could not be measured and is not asserted here.
+cross_links:
+  errors: errors/moda-operandi-problem-types.yml
+  lifecycle: lifecycle/moda-operandi-lifecycle.yml
+  authentication: authentication/moda-operandi-authentication.yml
+  rate_limits: rate-limits/moda-operandi-rate-limits.yml
+  data_model: data-model/moda-operandi-data-model.yml

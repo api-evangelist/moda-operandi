@@ -13,6 +13,17 @@ description: >-
   recommendations and faceted search). Moda Operandi also publishes its design system and
   design tokens as first-party npm packages under the @moda scope.
 url: https://raw.githubusercontent.com/api-evangelist/moda-operandi/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://www.modaoperandi.com/dist/public/favicon.png
 x-type: company
 x-source: harvest:secondary-market

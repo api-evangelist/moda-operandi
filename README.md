@@ -64,42 +64,114 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Moda Operandi is a New York-based luxury fashion e-commerce marketplace founded in 2010 by Lauren
-Santo Domingo and Aslaug Magnusdottir. It is built around the *trunkshow* model — customers
-pre-order directly from designers' full runway collections weeks before the clothes reach stores —
-alongside an in-season boutique carrying more than 1,000 brands across ready-to-wear, fine
-jewelry, home and beauty.
+Moda Operandi is a New York-based luxury fashion e-commerce marketplace founded in 2010 by Lauren Santo Domingo and Aslaug Magnusdottir, built around the "trunkshow" model — customers pre-order directly from designers' full runway collections weeks before the clothes reach stores — alongside a conventional in-season boutique carrying more than 1,000 brands across ready-to-wear, fine jewelry, home and beauty. The company publishes no developer program, no partner API documentation and no OpenAPI definition. It does, however, operate a first-party GraphQL search and merchandising API at search.modaoperandi.com/graphql that powers modaoperandi.com itself, which answers anonymous introspection and exposes a read-only, 37-field catalog graph (trunkshows, designers, looks, product variants, recommendations and faceted search). Moda Operandi also publishes its design system and design tokens as first-party npm packages under the @moda scope.
 
-## What this profile found
+**Areas:** Company · Retail · E-Commerce · Fashion · Luxury · Marketplace · Apparel · Search · GraphQL · Product Catalog
 
-**Moda Operandi runs no developer program.** There is no developer portal, no API documentation,
-no API reference, no OpenAPI or Swagger definition, no SDK, no CLI, no webhook or event surface,
-no MCP server, no A2A agent card, no `/.well-known/` document on any host, no status page, no
-changelog, no `security.txt`, no published rate limits and no API pricing.
+## Moda Operandi on APIs.io
 
-**But one real machine-readable contract exists.** `https://search.modaoperandi.com/graphql` is the
-first-party GraphQL API that powers search and browse on modaoperandi.com. It is undocumented, but
-it is public, it is named by the storefront's own runtime configuration as
-`SEARCH_API_GRAPHQL_ENDPOINT`, and it answers anonymous introspection. The complete schema —
-37 query fields, 121 types, read-only (no mutation or subscription root) — was introspected on
-2026-08-25 and is saved verbatim in [`graphql/`](graphql/).
+Everything profiled for Moda Operandi is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/moda-operandi/](https://apis.io/providers/moda-operandi/)** — or go straight to one of the APIs or properties below.
 
-Notable findings recorded in the artifacts:
+### APIs (1)
 
-- **Twelve of the 37 root query fields are already `@deprecated`** with no dates and no removal
-  policy; ten of them say "use `product_listing` instead". See [`lifecycle/`](lifecycle/).
-- **Error responses leak a full server-side stacktrace** with absolute filesystem paths under
-  `/opt/app/dist/server/`. See [`errors/`](errors/).
-- **No rate-limit headers of any kind** are emitted, so a client gets no back-off signal. See
-  [`rate-limits/`](rate-limits/).
-- **No API SDK exists.** The nine first-party npm packages under the `@moda` and `@mo-tools-engine`
-  scopes are a React design system, design tokens and an abandoned internal-tools devkit — none of
-  them wraps any Moda Operandi API. See [`packages/`](packages/).
+- [Moda Operandi Search API](https://apis.io/apis/moda-operandi/search-api/) — The first-party GraphQL API that powers search, browse and merchandising on modaoperandi.com. It is referenced by the storefront's own client bundle as…
 
-## Links
+### Published properties
 
-- Website: https://www.modaoperandi.com/
-- Terms: https://www.modaoperandi.com/terms
-- Privacy: https://www.modaoperandi.com/privacy
-- GitHub: https://github.com/ModaOperandi
-- Help Center: https://help.modaoperandi.com/hc/en-us
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### GraphQL (1)
+
+GraphQL schemas.
+
+- [Moda Operandi Search API — GraphQL](https://apis.io/graphqls/moda-operandi/moda-operandi-graphql/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [moda-operandi](https://apis.io/servers/moda-operandi/moda-operandi/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Moda Operandi Authentication](https://apis.io/security/moda-operandi/moda-operandi-authentication/)
+- [Moda Operandi Domain Security](https://apis.io/security/moda-operandi/moda-operandi-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Moda Operandi Plans Pricing](https://apis.io/plans/moda-operandi/moda-operandi-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Moda Operandi Rate Limits](https://apis.io/rate-limits/moda-operandi/moda-operandi-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.modaoperandi.com/)
+- [Sign up](https://www.modaoperandi.com/register)
+- [Support](https://help.modaoperandi.com/hc/en-us)
+- [Blog](https://www.modaoperandi.com/editorial/the-edits)
+- [Terms of service](https://www.modaoperandi.com/terms)
+- [Privacy policy](https://www.modaoperandi.com/privacy)
+- [GitHub](https://github.com/ModaOperandi)
+
+## API Evangelist rating
+
+**Kin Score 28.7** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 35.1 |
+| Contract governance | 4.5 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 20.8 |
+| Access clarity | 34.2 |
+
+**Agent readiness 21.8** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/moda-operandi/](https://apis.io/providers/moda-operandi/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Moda Operandi: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/moda-operandi/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
